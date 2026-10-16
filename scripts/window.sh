@@ -50,7 +50,7 @@ else
         FZF_DEFAULT_OPTS="$FZF_DEFAULT_OPTS --header='Select target window(s). Press TAB to mark multiple items.'"
     elif [[ "$action" == "switch" ]]; then
         FZF_DEFAULT_OPTS="$FZF_DEFAULT_OPTS --header='Select target window. Ctrl-S favorites, Ctrl-R removes.'"
-        window_favorite_options="--no-sort --bind='ctrl-s:execute-silent($CURRENT_DIR/scripts/window-favorites.sh save {+})+reload($CURRENT_DIR/scripts/window-favorites.sh list)+clear-selection' --bind='ctrl-r:execute-silent($CURRENT_DIR/scripts/window-favorites.sh remove {+})+reload($CURRENT_DIR/scripts/window-favorites.sh list)+clear-selection'"
+        window_favorite_options="--no-sort --bind='ctrl-s:execute-silent($CURRENT_DIR/window-favorites.sh save {+})+reload($CURRENT_DIR/window-favorites.sh list)+clear-selection' --bind='ctrl-r:execute-silent($CURRENT_DIR/window-favorites.sh remove {+})+reload($CURRENT_DIR/window-favorites.sh list)+clear-selection'"
     else
         FZF_DEFAULT_OPTS="$FZF_DEFAULT_OPTS --header='Select target window.'"
     fi
@@ -58,7 +58,7 @@ else
         target_origin=$(printf "[current]\n%s\n[cancel]" "$windows" | eval "$TMUX_FZF_BIN $TMUX_FZF_OPTIONS $TMUX_FZF_PREVIEW_OPTIONS")
         target_origin=${target_origin/\[current\]/$current_window_origin}
     else
-        target_origin=$("$CURRENT_DIR/scripts/window-favorites.sh" list | eval "$TMUX_FZF_BIN $TMUX_FZF_OPTIONS $TMUX_FZF_PREVIEW_OPTIONS $window_favorite_options")
+        target_origin=$("$CURRENT_DIR/window-favorites.sh" list | eval "$TMUX_FZF_BIN $TMUX_FZF_OPTIONS $TMUX_FZF_PREVIEW_OPTIONS $window_favorite_options")
     fi
     [[ "$target_origin" == "[cancel]" || -z "$target_origin" ]] && exit
     target=$(echo "$target_origin" | sed 's/: .*//')
