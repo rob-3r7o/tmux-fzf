@@ -45,13 +45,13 @@ list_favorite_windows() {
         fi
     done <<< "$windows"
 
-    if ((${#regular_windows[@]} > 0)); then
-        printf '%s\n' "${regular_windows[@]}"
-    fi
     if ((${#favorite_windows[@]} > 0)); then
         printf '%s\n' "${favorite_windows[@]}" |
-            sort -t $'\t' -k1,1nr |
+            sort -t $'\t' -k1,1n |
             cut -f2-
+    fi
+    if ((${#regular_windows[@]} > 0)); then
+        printf '%s\n' "${regular_windows[@]}"
     fi
     printf '[cancel]\n'
 }
