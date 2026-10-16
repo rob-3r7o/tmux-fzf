@@ -56,7 +56,7 @@ Btw, if you want to bind a key to kill current window, I would recommend `unlink
 
 ## Favorite Windows
 
-In the window switch view, use `TAB` or `Shift-TAB` to select windows, then press `Ctrl-S` to save them as favorites or `Ctrl-R` to remove them. Favorites have a `★` before the window name and stay below non-favorites. The first saved favorite stays at the bottom, with later favorites stacked above it. Favorites are stored on the tmux window, so they follow it when renamed or moved and disappear when it is closed.
+In the window switch view, use `TAB` or `Shift-TAB` to select windows, then press `Ctrl-S` to toggle their favorite status. Favorites have a `★` before the window name and stay below non-favorites. The first saved favorite stays at the bottom, with later favorites stacked above it. Favorites are stored on the tmux window, so they follow it when renamed or moved and disappear when it is closed.
 
 ## User Menu
 

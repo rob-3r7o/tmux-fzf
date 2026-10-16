@@ -56,10 +56,9 @@ list_favorite_windows() {
     printf '[cancel]\n'
 }
 
-update_favorite_windows() {
-    local action="$1"
-    shift
-    local entry target order counter
+toggle_favorite_windows() {
+    local entry target order counter window_id seen_id
+    local -a seen_window_ids=()
 
     for entry in "$@"; do
         [[ "$entry" == "[cancel]" ]] && continue
@@ -69,16 +68,20 @@ update_favorite_windows() {
         fi
 
         target="${entry%%: *}"
+        window_id=$(tmux display-message -p -t "$target" '#{window_id}')
+        for seen_id in "${seen_window_ids[@]}"; do
+            [[ "$seen_id" == "$window_id" ]] && continue 2
+        done
+        seen_window_ids+=("$window_id")
         order=$(tmux display-message -p -t "$target" '#{@tmux_fzf_favorite_order}')
-        if [[ "$action" == "save" ]]; then
-            [[ "$order" =~ ^[0-9]+$ ]] && continue
+        if [[ "$order" =~ ^[0-9]+$ ]]; then
+            tmux set-option -w -u -t "$target" @tmux_fzf_favorite_order
+        else
             counter=$(tmux show-option -gqv @tmux_fzf_favorite_order_counter)
             [[ "$counter" =~ ^[0-9]+$ ]] || counter=0
             counter=$((counter + 1))
             tmux set-option -g @tmux_fzf_favorite_order_counter "$counter"
             tmux set-option -w -t "$target" @tmux_fzf_favorite_order "$counter"
-        elif [[ -n "$order" ]]; then
-            tmux set-option -w -u -t "$target" @tmux_fzf_favorite_order
         fi
     done
 }
@@ -87,13 +90,12 @@ case "$1" in
     list)
         list_favorite_windows
         ;;
-    save|remove)
-        action="$1"
+    toggle)
         shift
-        update_favorite_windows "$action" "$@"
+        toggle_favorite_windows "$@"
         ;;
     *)
-        printf 'Usage: %s {list|save|remove} [window entries...]\n' "$0" >&2
+        printf 'Usage: %s {list|toggle} [window entries...]\n' "$0" >&2
         exit 2
         ;;
 esac
