@@ -50,7 +50,7 @@ else
         FZF_DEFAULT_OPTS="$FZF_DEFAULT_OPTS --header='Select target window(s). Press TAB to mark multiple items.'"
     elif [[ "$action" == "switch" ]]; then
         FZF_DEFAULT_OPTS="$FZF_DEFAULT_OPTS --header='Select target window. Ctrl-S toggles favorite.'"
-        window_favorite_options="--no-sort --bind='ctrl-s:execute-silent($CURRENT_DIR/window-favorites.sh toggle {+})+reload($CURRENT_DIR/window-favorites.sh list)+clear-selection'"
+        window_favorite_options="--no-sort --bind='ctrl-s:execute-silent($CURRENT_DIR/window-favorites.sh toggle {+})+reload($CURRENT_DIR/window-favorites.sh list)+clear-selection' --bind='ctrl-r:ignore'"
     else
         FZF_DEFAULT_OPTS="$FZF_DEFAULT_OPTS --header='Select target window.'"
     fi
