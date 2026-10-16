@@ -44,6 +44,7 @@ if [ $(compare_float $tmux_version "3.1") == ">" ]; then
 else
   [ -z "$TMUX_FZF_OPTIONS" ] && TMUX_FZF_OPTIONS="-m"
 fi
+TMUX_FZF_OPTIONS="$TMUX_FZF_OPTIONS --bind=tab:toggle,btab:toggle"
 
 # $TMUX_FZF_CLIENT_ARG
 # Commands executed via "tmux run-shell -b" have no client context, so tmux

@@ -141,6 +141,8 @@ This plugin will read [fzf environment variables](https://github.com/junegunn/fz
 
 In addition, this plugin supports customizing the options of `fzf-tmux` command which is [bundled with fzf](https://github.com/junegunn/fzf#fzf-tmux-script), you can customize them by adding something like this to `~/.tmux.conf`
 
+By default, `TAB` and `Shift-TAB` toggle the current item without moving the cursor.
+
 ```tmux
 # Default value in tmux < 3.2
 TMUX_FZF_OPTIONS="-m"
